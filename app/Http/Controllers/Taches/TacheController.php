@@ -44,7 +44,6 @@ class TacheController extends Controller
 
         public function editTache(Request $request, $id)
         {
-
             $data = $request->validate([
                 'titre' => 'required|string|max:100',
                 'description' => 'required|string|max:225',
@@ -52,10 +51,13 @@ class TacheController extends Controller
                 'heures' => 'required|date_format:Y-m-d H:i:s',
             ]);
 
-
             $tache = Tache::find($id);
 
-            dd($tache);
+            if (!$tache) {
+                return response()->json([
+                    'message' => 'Tâche non trouvée.',
+                ], 404);
+            }
 
             $tache->update([
                 'titre' => $data['titre'],
@@ -64,11 +66,15 @@ class TacheController extends Controller
                 'heures' => $data['heures'],
             ]);
 
+         
+            $tache->refresh();
+
             return response()->json([
                 'message' => 'Tâche modifiée avec succès !',
                 'tache' => $tache,
-            ], 200);
+            ], 201);
         }
+
 
 
         public function deleteTache($id)

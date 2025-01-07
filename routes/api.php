@@ -39,7 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // Gestion des Routes Taches
     Route::post('store/tache',[TacheController::class,'storeTache']);
     Route::get('liste/tache',[TacheController::class,'listTache']);
-    Route::put('edit/tache/{id}',[TacheController::class,'editTache']);
+    Route::post('edit/tache/{id}',[TacheController::class,'editTache']);
     Route::delete('delete/tache/{id}',[TacheController::class,'deleteTache']);
 
 });
