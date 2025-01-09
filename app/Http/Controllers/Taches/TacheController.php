@@ -23,22 +23,20 @@ class TacheController extends Controller
         {
            $request->validate([
                 'titre' => 'required|string|max:100',
-                'description' => 'required|string|max:225',
-                'date' => 'required|date|after_or_equal:today',
-                'heures' => 'required|date_format:H:i:s',
+                'description' => 'string|max:225',
             ]);
 
            // dd($data);
-            Tache::create([
+           $tache = Tache::create([
                 'titre' => $request->titre,
                 'description' => $request->description,
-                'date' => $request->date,
+               /*  'date' => $request->date,
                 'heures' => $request->heures,
-                'user_id' => Auth::user()->id,
+                'user_id' => Auth::user()->id, */
             ]);
 
             return response()->json([
-                'message' => 'Tâche enregistrée !'
+                'message' => $tache
             ],201);
         }
 
@@ -66,7 +64,7 @@ class TacheController extends Controller
                 'heures' => $data['heures'],
             ]);
 
-         
+
             $tache->refresh();
 
             return response()->json([
